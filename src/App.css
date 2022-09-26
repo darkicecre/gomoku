@@ -1,0 +1,9 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #deb6de;
+  font-family: 'Josefin',sans-serif;  
+}
