@@ -5,8 +5,7 @@
     color: rgb(151, 42, 42);
     font-size: 35px;
     font-weight: 900;
-    margin: 0 auto;
-    padding-left: 40px;
+    display: flex;
 }
 
 .O{
@@ -16,7 +15,10 @@
     color: rgb(48, 48, 192);
     font-size: 35px;
     font-weight: 900;
-    margin: 0 auto;
-    padding-left: 40px;
+    display: flex;
+}
+
+p{
+    margin: auto;
 }
 
