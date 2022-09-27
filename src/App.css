@@ -7,3 +7,23 @@ body {
   background-color: #deb6de;
   font-family: 'Josefin',sans-serif;  
 }
+
+.App{
+  margin-top: 50px;
+  display: flex;
+}
+
+.left{
+  width: 25vw;
+  height: 100%;
+}
+
+.right{
+  width: 25vw;
+  height: 100%;
+}
+
+.center{
+  width: 50vw;
+  height: 100%;
+}

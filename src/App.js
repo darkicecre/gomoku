@@ -2,19 +2,10 @@ import React, {useState} from "react";
 import './App.css';
 
 import { Board } from "./components/Board"
+import { Log } from "./components/Log";
+import { Turn } from "./components/Turn"
 
 function App() {
-  const sizeBoard = {
-    row:13,
-    col:13
-  }
-  const [highlight,setHighLight] = useState({
-    isHighLight: false,
-    playerHighLight: 'X',
-    typeHighLight : 'row', // row col main-diagol sub-diagol
-    pointRow: [0,0,0,0,0],
-    pointCol: [0,0,0,0,0]
-  })
   // const testArray = [
   //   ["X","O","X","O","X","O","X","O","X","O","X","O","X"],
   //   ["X","O","X","O","X","O","X","O","X","O","X","O","X"],
@@ -30,11 +21,24 @@ function App() {
   //   ["O","X","O","X","O","X","O","X","O","X","O","X","O"],
   //   ["X","O","X","O","X","O","X","O","X","O","X","O",null],
   // ]
-  const [board, setBoard] = useState(Array(sizeBoard.row).fill(Array(sizeBoard.col).fill(null)));
   // const [board,setBoard]=useState(testArray)
+  const sizeBoard = {
+    row:13,
+    col:13
+  }
+  const [board, setBoard] = useState(Array(sizeBoard.row).fill(Array(sizeBoard.col).fill(null)));
+  const [highlight,setHighLight] = useState({
+    isHighLight: false,
+    playerHighLight: 'X',
+    typeHighLight : 'row', // row col main-diagol sub-diagol
+    pointRow: [0,0,0,0,0],
+    pointCol: [0,0,0,0,0]
+  })
+  const [isSortIncrease,setReverse] = useState(true); 
   const [xPlaying, setXPlaying] = useState(true);
   const [isLock,setLock] = useState(false);
-
+  const [listHistory,setListHistory] = useState([]);
+  
   const handleBoxClick = (indexRow,indexCol) => {
     if(!isLock){
       let isChangePlayer = false;
@@ -54,21 +58,29 @@ function App() {
           }
         })
       })
-      checkWin(updatedBoard)
-      setBoard(updatedBoard);
-      if(checkDraw(updatedBoard)){
-        setHighLight({
-          isHighLight: true,
-          playerHighLight: "",
-          typeHighLight : "draw", // row col main-diagol sub-diagol
-          pointRow: [],
-          pointCol: []
-        })
+      if(isChangePlayer){
+        checkWin(updatedBoard)
+        setBoard(updatedBoard);
+        if(checkDraw(updatedBoard)){
+          setHighLight({
+            isHighLight: true,
+            playerHighLight: "",
+            typeHighLight : "draw", // row col main-diagol sub-diagol
+            pointRow: [],
+            pointCol: []
+          })
+        }
+        const newHistory = {
+          player: (xPlaying===true)? "X": "O",
+          row:indexRow,
+          col:indexCol
+        }
+        listHistory.push(newHistory)
+        setListHistory(listHistory)
+        setXPlaying(!xPlaying);
+
       }
 
-      if(isChangePlayer){
-        setXPlaying(!xPlaying);
-      }
     }
   }
 
@@ -169,11 +181,27 @@ function App() {
     }
     return true;
   }
+
+
   return (
     <div className="App">
-      <Board board={board} onClick={handleBoxClick} highlight={highlight}/>
+      <div className="left">
+        <Turn isTurnX={xPlaying}></Turn>
+        <Log list={listHistory} sortIncrease={isSortIncrease}></Log>
+        <button className="sortList" onClick={()=>{setReverse(!isSortIncrease)}}>
+          {(isSortIncrease===true)?"Click to Decrease":"Click to Increase"}
+        </button>
+      </div>
+      <div className="center">
+        <Board board={board} onClick={handleBoxClick} highlight={highlight}/>
+      </div>
+      <div className="right">
+
+      </div>
     </div>
   );
 }
+
+
 
 export default App;

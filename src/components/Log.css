@@ -1,0 +1,22 @@
+.log{
+    margin: 5px;
+    width: 100%;
+    height: 200px;
+    background-color: white;
+    padding: 5px 30px;
+    overflow-y: scroll;
+    font-family: 'Josefin',sans-serif; 
+    font-size: 20px;
+}
+
+.log-item{
+    display: flex;
+}
+
+.player{
+    width: 45px;
+}
+
+.bold{
+    font-weight: 800;
+}
